@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { fetchProjects } from "../api.js";
+import Reveal from "./motion/Reveal.jsx";
+import { StaggerContainer, ITEM_VARIANTS } from "./motion/Stagger.jsx";
+import TiltCard from "./motion/TiltCard.jsx";
 
 const FALLBACK_PROJECTS = [
   {
@@ -91,7 +94,7 @@ export default function Work() {
 
   return (
     <section className="work" id="work">
-      <div className="intro">
+      <Reveal className="intro" variant="up">
         <h1>
           Most of what I build starts with a real problem or a question I wanted to test — from an exam platform used for our
           college's actual MCA entrance exam to a robot that waves back at people.
@@ -101,20 +104,27 @@ export default function Work() {
             I move across web development, machine learning, cloud infrastructure, and IoT — usually whichever combination
             actually solves the problem in front of me.
           </p>
-          <a href="#about">
+          <a href="#about" data-cursor="hover">
             More about me <span>↗</span>
           </a>
         </div>
-      </div>
+      </Reveal>
 
-      <div className="section-title">
+      <Reveal className="section-title" variant="up">
         <h2>Projects</h2>
         <p>A SELECTION ACROSS WEB, AI/ML, CLOUD, AND HARDWARE — FROM A REAL COLLEGE EXAM SYSTEM TO EXPERIMENTS BUILT JUST TO SEE IF THEY'D WORK.</p>
-      </div>
+      </Reveal>
 
-      <div className="projects">
+      <StaggerContainer className="projects" stagger={0.09} amount={0.15}>
         {projects.map((project) => (
-          <a className="project" key={project._id} href={project.link || "#"} aria-label={project.title}>
+          <TiltCard
+            className="project"
+            key={project._id}
+            href={project.link || "#"}
+            aria-label={project.title}
+            variants={ITEM_VARIANTS.up}
+            cursorLabel="view"
+          >
             {project.dark ? (
               <div className="project__dark">
                 <img src={`/${project.image}`} alt={project.alt || `${project.title} logo`} />
@@ -125,9 +135,9 @@ export default function Work() {
             <h3>
               <span>↗</span> {project.title}
             </h3>
-          </a>
+          </TiltCard>
         ))}
-      </div>
+      </StaggerContainer>
     </section>
   );
 }

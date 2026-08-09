@@ -1,13 +1,23 @@
+import Reveal from "./motion/Reveal.jsx";
+import { StaggerContainer, StaggerItem } from "./motion/Stagger.jsx";
+
+const FACTS = [
+  { label: "Currently", value: "MCA, St. Joseph's College (Autonomous), Devagiri" },
+  { label: "Background", value: "BSc Computer Science" },
+  { label: "Focus areas", value: "Software development, AI/ML, cloud computing, IoT" },
+  { label: "Looking ahead", value: "AI research, advanced software systems, product development" },
+];
+
 export default function About() {
   return (
     <section className="about" id="about">
-      <div className="section-title">
+      <Reveal className="section-title" variant="up">
         <h2>About</h2>
         <p>MCA STUDENT AT ST. JOSEPH'S COLLEGE (AUTONOMOUS), DEVAGIRI — BUILDING ACROSS SOFTWARE, AI, CLOUD, AND HARDWARE.</p>
-      </div>
+      </Reveal>
 
       <div className="about__text">
-        <div>
+        <Reveal variant="up" delay={0.05}>
           <p>
             I'm Akshath O K, currently pursuing my Master of Computer Applications at St. Joseph's College (Autonomous),
             Devagiri, Kozhikode, after finishing a BSc in Computer Science. I like understanding how a system actually works,
@@ -18,25 +28,15 @@ export default function About() {
             because I wanted to solve a real problem or test whether an idea would actually work, not just add another line to
             a portfolio.
           </p>
-        </div>
-        <div className="about__facts">
-          <div>
-            <strong>Currently</strong>
-            MCA, St. Joseph's College (Autonomous), Devagiri
-          </div>
-          <div>
-            <strong>Background</strong>
-            BSc Computer Science
-          </div>
-          <div>
-            <strong>Focus areas</strong>
-            Software development, AI/ML, cloud computing, IoT
-          </div>
-          <div>
-            <strong>Looking ahead</strong>
-            AI research, advanced software systems, product development
-          </div>
-        </div>
+        </Reveal>
+        <StaggerContainer className="about__facts" stagger={0.08}>
+          {FACTS.map((fact) => (
+            <StaggerItem key={fact.label}>
+              <strong>{fact.label}</strong>
+              {fact.value}
+            </StaggerItem>
+          ))}
+        </StaggerContainer>
       </div>
     </section>
   );

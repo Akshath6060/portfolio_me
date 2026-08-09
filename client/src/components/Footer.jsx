@@ -1,13 +1,18 @@
+import Reveal from "./motion/Reveal.jsx";
+import MagneticButton from "./motion/MagneticButton.jsx";
+
 export default function Footer() {
   return (
     <footer>
       <div className="footer__top">
         <p>curious builder, always experimenting</p>
-        <a href="#home" aria-label="Back to top">
+        <MagneticButton href="#home" aria-label="Back to top" max={8}>
           ↗
-        </a>
+        </MagneticButton>
       </div>
-      <div className="footer__name">Akshath O K</div>
+      <Reveal variant="up" className="footer__name">
+        Akshath O K
+      </Reveal>
     </footer>
   );
 }

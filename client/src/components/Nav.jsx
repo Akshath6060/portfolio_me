@@ -7,25 +7,30 @@ export default function Nav() {
 
   return (
     <nav aria-label="Portfolio navigation">
-      <a className={linkClass("#home")} href="#home" aria-label="Home">
+      <a className={linkClass("#home")} href="#home" aria-label="Home" data-cursor="hover">
         ⌂
       </a>
-      <a className={linkClass("#skills")} href="#skills" aria-label="Skills">
+      <a className={linkClass("#skills")} href="#skills" aria-label="Skills" data-cursor="hover">
         ⌘
       </a>
-      <a className={linkClass("#work")} href="#work" aria-label="Projects">
+      <a className={linkClass("#work")} href="#work" aria-label="Projects" data-cursor="hover">
         ◇
       </a>
-      <a className={`avatar ${linkClass("#about") ?? ""}`.trim()} href="#about" aria-label="About">
+      <a
+        className={`avatar ${linkClass("#about") ?? ""}`.trim()}
+        href="#about"
+        aria-label="About"
+        data-cursor="hover"
+      >
         <img src="/assets/avatar.png" alt="" />
       </a>
-      <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" aria-label="Resume">
+      <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" aria-label="Resume" data-cursor="hover">
         ▤
       </a>
-      <a className={linkClass("#experience")} href="#experience" aria-label="Experience">
+      <a className={linkClass("#experience")} href="#experience" aria-label="Experience" data-cursor="hover">
         ●
       </a>
-      <a className={linkClass("#contact")} href="#contact" aria-label="Contact">
+      <a className={linkClass("#contact")} href="#contact" aria-label="Contact" data-cursor="hover">
         ↗
       </a>
     </nav>

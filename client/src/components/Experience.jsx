@@ -1,3 +1,6 @@
+import Reveal from "./motion/Reveal.jsx";
+import { StaggerContainer, StaggerItem } from "./motion/Stagger.jsx";
+
 const EXPERIENCE = [
   {
     role: "Campus Lead → Operations & Quality Assurance Lead",
@@ -24,22 +27,22 @@ const EXPERIENCE = [
 export default function Experience() {
   return (
     <section className="experience" id="experience">
-      <div className="section-title">
+      <Reveal className="section-title" variant="up">
         <h2>Experience</h2>
         <p>TECHNOLOGY ISN'T MY ONLY EXPERIENCE — I'VE ALSO COORDINATED STUDENT COMMUNITIES AND TECHNICAL EVENTS.</p>
-      </div>
+      </Reveal>
 
-      <div className="experience__list">
+      <StaggerContainer className="experience__list" stagger={0.1} amount={0.15}>
         {EXPERIENCE.map((item) => (
-          <div className="experience__item" key={item.role}>
+          <StaggerItem className="experience__item" key={item.role}>
             <div>
               <div className="experience__role">{item.role}</div>
               <div className="experience__org">{item.org}</div>
             </div>
             <p className="experience__desc">{item.desc}</p>
-          </div>
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerContainer>
     </section>
   );
 }

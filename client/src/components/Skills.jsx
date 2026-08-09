@@ -1,3 +1,6 @@
+import Reveal from "./motion/Reveal.jsx";
+import { StaggerContainer, StaggerItem } from "./motion/Stagger.jsx";
+
 const SKILLS = [
   { category: "Programming", items: ["Python", "Java", "C", "JavaScript", "SQL"] },
   { category: "Web & Backend", items: ["Django", "FastAPI", "Node.js", "Express", "REST APIs"] },
@@ -12,23 +15,23 @@ const SKILLS = [
 export default function Skills() {
   return (
     <section className="skills" id="skills">
-      <div className="section-title">
+      <Reveal className="section-title" variant="up">
         <h2>Skills</h2>
         <p>TECHNOLOGIES I REACH FOR ACROSS SOFTWARE, AI/ML, CLOUD, AND HARDWARE PROJECTS.</p>
-      </div>
+      </Reveal>
 
-      <div className="skills__grid">
+      <StaggerContainer className="skills__grid" stagger={0.07} amount={0.15}>
         {SKILLS.map((group) => (
-          <div className="skills__category" key={group.category}>
+          <StaggerItem className="skills__category" key={group.category} variant="scale">
             <h3>{group.category}</h3>
             <div className="skills__tags">
               {group.items.map((item) => (
                 <span key={item}>{item}</span>
               ))}
             </div>
-          </div>
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerContainer>
     </section>
   );
 }
