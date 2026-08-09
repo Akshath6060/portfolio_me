@@ -3,7 +3,7 @@ import { projectConfig } from "../data/projectConfig.js";
 export const GITHUB_PROFILE_URL = "https://github.com/Akshath6060";
 export const GITHUB_REPOS_URL = "https://api.github.com/users/Akshath6060/repos?sort=updated&per_page=100";
 
-const CACHE_KEY = "akshath-github-projects-v1";
+const CACHE_KEY = "akshath-github-projects-v2";
 const CACHE_TTL = 60 * 60 * 1000;
 const STATUS_TOPICS = {
   completed: new Set(["completed", "complete", "finished", "production"]),
@@ -56,11 +56,15 @@ function prepareProjects(repositories) {
     return projectConfig.showEmpty || repo.size > 0;
   });
 
+  if (projectConfig.mode === "include") {
+    eligible = eligible.filter((repo) => included.has(repo.name.toLowerCase()));
+  }
+
   if (projectConfig.mode === "portfolio") {
     eligible = eligible.filter((repo) => included.has(repo.name.toLowerCase()) || repo.topics?.includes("portfolio"));
   }
 
-  return eligible
+  const publicProjects = eligible
     .map((repo) => {
       const override = projectConfig.overrides[repo.name] || {};
       return {
@@ -79,10 +83,33 @@ function prepareProjects(repositories) {
         featured: override.featured ?? projectConfig.featured.includes(repo.name),
         portfolioTagged: repo.topics?.includes("portfolio") || false,
       };
-    })
+    });
+
+  const publicNames = new Set(publicProjects.map((project) => project.name.toLowerCase()));
+  const privateProjects = (projectConfig.privateProjects || [])
+    .filter((project) => !publicNames.has(project.name.toLowerCase()))
+    .map((project, index) => ({
+      id: `private-${project.name}`,
+      name: project.name,
+      title: project.title || formatRepositoryName(project.name),
+      description: project.description || "Private project details available on request.",
+      status: project.status || "in-progress",
+      technologies: project.technologies || [],
+      updatedAt: null,
+      githubUrl: project.githubUrl,
+      demoUrl: validUrl(project.demoUrl),
+      topics: [],
+      featured: project.featured ?? true,
+      portfolioTagged: true,
+      private: true,
+      privateOrder: index,
+    }));
+
+  return [...privateProjects, ...publicProjects]
     .sort((a, b) =>
       Number(b.featured) - Number(a.featured) ||
       Number(b.portfolioTagged) - Number(a.portfolioTagged) ||
+      Number(a.privateOrder ?? 999) - Number(b.privateOrder ?? 999) ||
       new Date(b.updatedAt) - new Date(a.updatedAt)
     );
 }

@@ -7,6 +7,7 @@ import ScrollSection from "./motion/ScrollSection.jsx";
 import ProjectStatus from "./ProjectStatus.jsx";
 
 function updatedLabel(date) {
+  if (!date) return "Private repository";
   return `Updated ${new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" }).format(new Date(date))}`;
 }
 

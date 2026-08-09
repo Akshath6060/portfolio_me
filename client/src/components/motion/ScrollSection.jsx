@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import useMediaQuery from "../../hooks/useMediaQuery.js";
 
 const PATTERNS = {
   depth: { y: [20, 0, 0, -40], scale: [0.99, 1, 1, 0.97], opacity: [0.55, 1, 1, 0.6] },
@@ -13,6 +14,7 @@ export default function ScrollSection({ children, className, id, pattern = "soft
   const localRef = useRef(null);
   const ref = sectionRef || localRef;
   const reduced = useReducedMotion();
+  const hasFinePointer = useMediaQuery("(hover: hover) and (pointer: fine)");
   const values = PATTERNS[pattern] || PATTERNS.soft;
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 92%", "end 8%"] });
   const input = [0, 0.16, 0.82, 1];
@@ -25,7 +27,7 @@ export default function ScrollSection({ children, className, id, pattern = "soft
       ref={ref}
       id={id}
       className={className}
-      style={reduced ? undefined : { y, scale, opacity }}
+      style={reduced || !hasFinePointer ? undefined : { y, scale, opacity }}
       {...rest}
     >
       {children}

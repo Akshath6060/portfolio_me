@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "framer-motion";
+import useMediaQuery from "../../hooks/useMediaQuery.js";
 
 export default function TiltCard({
   as: Tag = "a",
@@ -11,6 +12,7 @@ export default function TiltCard({
 }) {
   const ref = useRef(null);
   const prefersReduced = useReducedMotion();
+  const hasFinePointer = useMediaQuery("(hover: hover) and (pointer: fine)");
   const px = useMotionValue(0.5);
   const py = useMotionValue(0.5);
   const rotateX = useSpring(useTransform(py, [0, 1], [2, -2]), { stiffness: 300, damping: 30 });
@@ -18,7 +20,7 @@ export default function TiltCard({
   const MotionTag = motion[Tag] || motion.a;
 
   const handleMove = (e) => {
-    if (prefersReduced || !ref.current) return;
+    if (prefersReduced || !hasFinePointer || !ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     px.set((e.clientX - rect.left) / rect.width);
     py.set((e.clientY - rect.top) / rect.height);
@@ -34,7 +36,7 @@ export default function TiltCard({
       ref={ref}
       className={className}
       variants={variants}
-      style={{ rotateX, rotateY, transformPerspective: 800 }}
+      style={hasFinePointer ? { rotateX, rotateY, transformPerspective: 800 } : undefined}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
       data-cursor={cursorLabel}

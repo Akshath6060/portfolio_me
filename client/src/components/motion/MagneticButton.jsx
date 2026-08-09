@@ -1,9 +1,11 @@
 import { useRef } from "react";
 import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
+import useMediaQuery from "../../hooks/useMediaQuery.js";
 
 export default function MagneticButton({ as: Tag = "a", className, children, strength = 0.3, max = 8, ...rest }) {
   const ref = useRef(null);
   const prefersReduced = useReducedMotion();
+  const hasFinePointer = useMediaQuery("(hover: hover) and (pointer: fine)");
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const springX = useSpring(x, { stiffness: 300, damping: 20, mass: 0.4 });
@@ -11,7 +13,7 @@ export default function MagneticButton({ as: Tag = "a", className, children, str
   const MotionTag = motion[Tag] || motion.a;
 
   const handleMove = (e) => {
-    if (prefersReduced || !ref.current) return;
+    if (prefersReduced || !hasFinePointer || !ref.current) return;
     const rect = ref.current.getBoundingClientRect();
     const relX = e.clientX - (rect.left + rect.width / 2);
     const relY = e.clientY - (rect.top + rect.height / 2);
@@ -28,7 +30,7 @@ export default function MagneticButton({ as: Tag = "a", className, children, str
     <MotionTag
       ref={ref}
       className={className}
-      style={{ x: springX, y: springY }}
+      style={hasFinePointer ? { x: springX, y: springY } : undefined}
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
       data-cursor="hover"

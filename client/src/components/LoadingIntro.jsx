@@ -14,7 +14,7 @@ export default function LoadingIntro({ onComplete }) {
   useEffect(() => {
     document.documentElement.classList.add("intro-active");
     const hasPlayed = sessionStorage.getItem("portfolio-intro-played") === "true";
-    const simple = reducedMotion || hasPlayed;
+    const simple = reducedMotion || hasPlayed || window.matchMedia("(hover: none), (pointer: coarse)").matches;
     const start = performance.now();
     const scrambleDuration = simple ? 0 : 1150;
     const totalDuration = simple ? 380 : 1900;
