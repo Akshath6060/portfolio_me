@@ -13,11 +13,12 @@ export default function LoadingIntro({ onComplete }) {
 
   useEffect(() => {
     document.documentElement.classList.add("intro-active");
-    const hasPlayed = sessionStorage.getItem("portfolio-intro-played") === "true";
+    let hasPlayed = false;
+    try { hasPlayed = sessionStorage.getItem("portfolio-intro-played") === "true"; } catch { /* Continue without persistence. */ }
     const simple = reducedMotion || hasPlayed || window.matchMedia("(hover: none), (pointer: coarse)").matches;
     const start = performance.now();
     const scrambleDuration = simple ? 0 : 1150;
-    const totalDuration = simple ? 380 : 1900;
+    const totalDuration = simple ? 0 : 1900;
 
     if (!simple) {
       const animate = (now) => {
@@ -37,10 +38,10 @@ export default function LoadingIntro({ onComplete }) {
 
     const exitTimer = window.setTimeout(() => setVisible(false), totalDuration);
     const doneTimer = window.setTimeout(() => {
-      sessionStorage.setItem("portfolio-intro-played", "true");
+      try { sessionStorage.setItem("portfolio-intro-played", "true"); } catch { /* The intro can complete without storage. */ }
       document.documentElement.classList.remove("intro-active");
       onComplete();
-    }, totalDuration + (simple ? 260 : 650));
+    }, totalDuration + (simple ? 0 : 650));
 
     return () => {
       if (frameRef.current) cancelAnimationFrame(frameRef.current);

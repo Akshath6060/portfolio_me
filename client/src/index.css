@@ -42,6 +42,7 @@ html{overflow-x:clip}body{min-width:320px}.work,.about,.experience,.skills,.educ
 footer{padding-left:max(2rem,calc((100vw - var(--content-max))/2));padding-right:max(2rem,calc((100vw - var(--content-max))/2));padding-bottom:calc(2.625rem + env(safe-area-inset-bottom))}.footer__name{font-size:clamp(4.5rem,15vw,16rem);white-space:normal;overflow-wrap:anywhere}.footer__bottom a{display:inline-flex;align-items:center;min-height:44px}
 .mobile-nav-toggle,.mobile-menu{display:none}
 :where(a,button,input,textarea):focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+.not-found{min-height:100svh;display:grid;align-content:center;justify-items:start;gap:1rem;padding:var(--pad);background:var(--page);color:var(--ink)}.not-found p{margin:0;color:var(--accent);font:500 1rem "IBM Plex Mono",monospace}.not-found h1{max-width:12ch;margin:0;font:500 clamp(3rem,9vw,8rem)/.95 "DM Sans",sans-serif}.not-found a{display:inline-flex;align-items:center;gap:.5rem;min-height:44px;margin-top:1rem;font:500 1.1rem "DM Sans",sans-serif}
 
 @media (min-width:1100px) and (max-width:1500px){.hero{height:min(56rem,100svh)}.work,.about,.experience,.skills,.education{padding-block:clamp(4.5rem,7vw,6.25rem)}.projects{gap:2rem}.project__panel{padding:clamp(1.75rem,2.7vw,2.75rem)}}
 

@@ -13,7 +13,7 @@ export function ThemeProvider({ children }) {
   const toggleTheme = () => {
     setTheme((current) => {
       const next = current === "dark" ? "light" : "dark";
-      localStorage.setItem("portfolio-theme", next);
+      try { localStorage.setItem("portfolio-theme", next); } catch { /* Theme still works when storage is unavailable. */ }
       return next;
     });
   };

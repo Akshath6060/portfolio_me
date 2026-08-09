@@ -17,8 +17,12 @@ export default function Hero() {
       <motion.img
         className="hero__image"
         style={{ scale: prefersReduced ? 1 : imageScale }}
-        src="/assets/hero.png"
+        src="/assets/hero.webp"
         alt="Akshath O K"
+        width="1672"
+        height="941"
+        fetchPriority="high"
+        decoding="async"
       />
       <div className="pointer-glow__layer" aria-hidden="true" />
       <motion.div

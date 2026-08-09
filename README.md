@@ -1,49 +1,55 @@
-# Akshath O K — Portfolio (MERN)
+# Akshath O K — Portfolio
 
-Same design as before, now split into a React (Vite) frontend and an Express + MongoDB backend.
+A production-focused personal portfolio for Akshath O K. It is a React single-page application with a Vercel serverless endpoint that retrieves and caches curated project data from GitHub.
 
-```
-client/   React app (Vite) — UI, identical to the original static design
-server/   Express API + Mongoose models (MongoDB) — serves project data, stores contact messages
-```
+## Stack
 
-## Prerequisites
+- React 18 and Vite 5
+- Framer Motion 13
+- Vercel Functions for server-side GitHub access
+- Plain CSS with responsive, light/dark, touch, and reduced-motion behavior
 
-- Node.js 18+
-- MongoDB running locally on the default port (`mongodb://127.0.0.1:27017`)
-  - macOS (Homebrew): `brew tap mongodb/brew && brew install mongodb-community && brew services start mongodb-community`
-  - or run any local `mongod` you already have
+## Local development
 
-## Setup
+Requirements: Node.js 20 or 22 and npm.
 
 ```bash
-npm run install:all        # installs deps for both server/ and client/
-npm install                # installs root dev deps (concurrently)
-
-cp server/.env.example server/.env   # defaults already point at localhost mongo
-cp client/.env.example client/.env   # only needed if the API isn't on localhost:5050
-
-npm run seed                # populates MongoDB with the project cards
+npm run install:all
+npm run dev
 ```
 
-## Run (dev)
+The Vite development server runs at `http://localhost:5173`. In development only, project data is requested from GitHub's public API. Production always uses the cached `/api/projects` serverless route.
+
+## Production build
 
 ```bash
-npm run dev                 # runs Express (localhost:5050) and Vite (localhost:5173) together
+npm run build
 ```
 
-Open http://localhost:5173 — the Vite dev server proxies `/api/*` requests to the Express server, so no CORS setup is needed in dev.
+The static output is written to `client/dist`.
 
-## Build for production
+## Environment variables
 
-```bash
-npm run build                # builds client/dist
-npm run dev:server           # or `npm start --prefix server` to run the API
-```
+Copy `.env.example` to `.env.local` when values are needed. Never commit the resulting file.
 
-Serve `client/dist` from your static host / CDN of choice, and point `VITE_API_URL` (set at build time) at wherever the Express server is deployed.
+| Variable | Required | Scope | Purpose |
+| --- | --- | --- | --- |
+| `VITE_SITE_URL` | Recommended | Public/build-time | Canonical production URL used by canonical and social metadata. Vercel's production project URL is used when this is omitted on Vercel. |
+| `GITHUB_TOKEN` | No | Server only | Raises GitHub API limits. Public repository fetching works without it. |
 
-## What moved where
+`GITHUB_TOKEN` must never use a `VITE_` prefix because Vite-prefixed values are included in browser code.
 
-- The project cards are documents in the `projects` MongoDB collection, served via `GET /api/projects`, seeded by `npm run seed`.
-- A new "Or send a message directly" form was added below the existing Contact section (the original mailto button/details are untouched). Submissions POST to `POST /api/contact` and are stored in the `messages` collection.
+## Deploying to Vercel
+
+1. Push the repository to GitHub.
+2. Import it into Vercel. The checked-in `vercel.json` supplies the install, build, output, SPA rewrite, and security-header configuration.
+3. Set `VITE_SITE_URL` to the final canonical domain. Optionally set the server-only `GITHUB_TOKEN`.
+4. Deploy. Preview deployments remain functional while canonical metadata continues to use `VITE_SITE_URL` when configured.
+
+The projects endpoint uses a one-hour CDN cache, serves stale responses during revalidation or upstream failure, and times out slow GitHub requests. The UI also keeps a stale browser cache and displays a GitHub fallback link when no project data is available.
+
+## Content configuration
+
+GitHub selection, ordering, featured state, descriptions, and manual status overrides are centralized in `client/src/data/projectConfig.js`. Status precedence is manual override, archived state, GitHub topics, then a conservative `In Progress` fallback.
+
+The contact area intentionally uses reliable email and social links; it does not present a form unless a real delivery backend is configured.

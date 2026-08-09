@@ -1,7 +1,8 @@
 import { projectConfig } from "../data/projectConfig.js";
 
 export const GITHUB_PROFILE_URL = "https://github.com/Akshath6060";
-export const GITHUB_REPOS_URL = "https://api.github.com/users/Akshath6060/repos?sort=updated&per_page=100";
+const PROJECTS_API_URL = "/api/projects";
+const DEVELOPMENT_GITHUB_URL = "https://api.github.com/users/Akshath6060/repos?sort=updated&per_page=100";
 
 const CACHE_KEY = "akshath-github-projects-v2";
 const CACHE_TTL = 60 * 60 * 1000;
@@ -129,12 +130,18 @@ export async function fetchGitHubProjects() {
   if (freshCache) return freshCache;
 
   try {
-    const response = await fetch(GITHUB_REPOS_URL, {
-      headers: { Accept: "application/vnd.github+json" },
-    });
-    if (!response.ok) throw new Error(`GitHub request failed (${response.status})`);
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 8000);
+    const requestUrl = import.meta.env.DEV ? DEVELOPMENT_GITHUB_URL : PROJECTS_API_URL;
+    const response = await fetch(requestUrl, {
+      headers: { Accept: import.meta.env.DEV ? "application/vnd.github+json" : "application/json" },
+      signal: controller.signal,
+    }).finally(() => window.clearTimeout(timeout));
+    if (!response.ok) throw new Error(`Projects request failed (${response.status})`);
     const projects = prepareProjects(await response.json());
-    localStorage.setItem(CACHE_KEY, JSON.stringify({ savedAt: Date.now(), projects }));
+    try {
+      localStorage.setItem(CACHE_KEY, JSON.stringify({ savedAt: Date.now(), projects }));
+    } catch { /* Projects still render when storage is unavailable or full. */ }
     return projects;
   } catch (error) {
     const staleCache = readCache(true);

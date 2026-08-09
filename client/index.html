@@ -3,16 +3,31 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="description" content="Akshath O K — building ideas into working systems across software, AI/ML, cloud, and IoT." />
+    <meta name="description" content="Portfolio of Akshath O K, an MCA student and developer working across software development, artificial intelligence, cloud, IoT, product development, and technology startups." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f3f0ea" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111315" />
+    <link rel="canonical" href="__SITE_URL__/" />
+    <meta property="og:title" content="Akshath O K — Developer, AI &amp; Product Builder" />
+    <meta property="og:description" content="Portfolio of Akshath O K, an MCA student and developer building across software, AI, cloud, IoT, and technology products." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="__SITE_URL__/" />
+    <meta property="og:image" content="__SITE_URL__/assets/hero.png" />
+    <meta property="og:image:alt" content="Akshath O K portfolio" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Akshath O K — Developer, AI &amp; Product Builder" />
+    <meta name="twitter:description" content="Software, AI, cloud, IoT, and product development portfolio." />
+    <meta name="twitter:image" content="__SITE_URL__/assets/hero.png" />
     <script>
       (() => {
-        const saved = localStorage.getItem("portfolio-theme");
+        let saved;
+        try { saved = localStorage.getItem("portfolio-theme"); } catch {}
         const theme = saved || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
         document.documentElement.dataset.theme = theme;
         document.documentElement.style.colorScheme = theme;
       })();
     </script>
-    <title>Akshath O K — Portfolio</title>
+    <title>Akshath O K — Developer, AI &amp; Product Builder</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2250%22/><text x=%2250%22 y=%2268%22 text-anchor=%22middle%22 font-size=%2260%22 fill=%22white%22>A</text></svg>" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

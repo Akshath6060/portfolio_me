@@ -7,7 +7,6 @@ import Experience from "./components/Experience.jsx";
 import Skills from "./components/Skills.jsx";
 import Education from "./components/Education.jsx";
 import Contact from "./components/Contact.jsx";
-import MessageForm from "./components/MessageForm.jsx";
 import Footer from "./components/Footer.jsx";
 import Nav from "./components/Nav.jsx";
 import ScrollProgress from "./components/motion/ScrollProgress.jsx";
@@ -17,7 +16,18 @@ import { ScrollDirectionProvider } from "./components/motion/ScrollDirection.jsx
 import LoadingIntro from "./components/LoadingIntro.jsx";
 import { ThemeProvider } from "./components/ThemeProvider.jsx";
 
+function NotFound() {
+  return (
+    <main className="not-found">
+      <p>404</p>
+      <h1>That page doesn't exist.</h1>
+      <a href="/">Return home <span aria-hidden="true">↗</span></a>
+    </main>
+  );
+}
+
 export default function App() {
+  if (window.location.pathname !== "/") return <ThemeProvider><NotFound /></ThemeProvider>;
   const [introComplete, setIntroComplete] = useState(false);
   const completeIntro = useCallback(() => setIntroComplete(true), []);
 
@@ -41,7 +51,6 @@ export default function App() {
         <Skills />
         <Education />
         <Contact />
-        <MessageForm />
         <Footer />
           {introComplete && <Nav />}
           </motion.main>

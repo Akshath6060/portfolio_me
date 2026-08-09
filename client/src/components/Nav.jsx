@@ -62,7 +62,6 @@ export default function Nav() {
             <span className="nav__icon">{link.icon}</span>
           </a>
         ))}
-        <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" aria-label="Resume" data-cursor="hover">▤</a>
         <button className="nav__theme" type="button" onClick={toggleTheme} aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`} data-cursor="hover"><span aria-hidden="true">{theme === "dark" ? "☾" : "☀"}</span></button>
       </nav>
 
@@ -73,7 +72,6 @@ export default function Nav() {
               {LINKS.map((link, index) => <a ref={index === 0 ? firstLinkRef : undefined} className={isActive(link.hash) ? "active" : undefined} href={link.hash} onClick={closeMenu} key={link.hash}>{link.label}<span aria-hidden="true">↗</span></a>)}
             </div>
             <div className="mobile-menu__actions">
-              <a href="/resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
               <button type="button" onClick={toggleTheme}>Use {theme === "dark" ? "light" : "dark"} theme</button>
             </div>
           </motion.div>
