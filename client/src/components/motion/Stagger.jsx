@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import { EASE } from "./Reveal.jsx";
+import { EASE, HORIZONTAL_VARIANTS, NARROW_QUERY } from "./Reveal.jsx";
 import { useScrollDirection } from "./ScrollDirection.jsx";
+import useMediaQuery from "../../hooks/useMediaQuery.js";
 
 export function StaggerContainer({
   children,
@@ -48,8 +49,10 @@ const ITEM_VARIANTS = {
 };
 
 export function StaggerItem({ children, as: Component = motion.div, className, variant = "up", ...rest }) {
+  const narrow = useMediaQuery(NARROW_QUERY);
+  const resolved = narrow && HORIZONTAL_VARIANTS.has(variant) ? "up" : variant;
   return (
-    <Component className={className} variants={ITEM_VARIANTS[variant]} {...rest}>
+    <Component className={className} variants={ITEM_VARIANTS[resolved]} {...rest}>
       {children}
     </Component>
   );

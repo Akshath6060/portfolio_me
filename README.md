@@ -46,6 +46,10 @@ Copy `.env.example` to `.env.local` when values are needed. Never commit the res
 3. Set `VITE_SITE_URL` to the final canonical domain. Optionally set the server-only `GITHUB_TOKEN`.
 4. Deploy. Preview deployments remain functional while canonical metadata continues to use `VITE_SITE_URL` when configured.
 
+## Security headers
+
+`vercel.json` sends `nosniff`, `Referrer-Policy`, `Permissions-Policy`, `X-Frame-Options`, and a Content Security Policy. The policy allows no inline scripts, so the pre-paint theme bootstrap lives in `client/public/theme-init.js` rather than in `index.html`. Any future inline `<script>` needs either the same treatment or a matching hash in the policy. `style-src` keeps `'unsafe-inline'` because React and Framer Motion write inline style attributes, and Google Fonts serves an external stylesheet.
+
 The projects endpoint uses a one-hour CDN cache, serves stale responses during revalidation or upstream failure, and times out slow GitHub requests. The UI also keeps a stale browser cache and displays a GitHub fallback link when no project data is available.
 
 ## Content configuration

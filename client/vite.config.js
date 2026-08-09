@@ -2,8 +2,11 @@ import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), "");
-  const configuredUrl = env.VITE_SITE_URL || (env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${env.VERCEL_PROJECT_PRODUCTION_URL}` : "");
+  // Only VITE_-prefixed values are loaded, so a server-only secret in .env can
+  // never be picked up here by accident.
+  const env = loadEnv(mode, process.cwd(), "VITE_");
+  const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+  const configuredUrl = env.VITE_SITE_URL || (vercelUrl ? `https://${vercelUrl}` : "");
   const siteUrl = configuredUrl.replace(/\/$/, "");
   return {
   plugins: [react(), {
@@ -13,7 +16,7 @@ export default defineConfig(({ mode }) => {
       return html
         .replace(/\s*<link rel="canonical"[^>]+>/, "")
         .replace(/\s*<meta property="og:url"[^>]+>/, "")
-        .replaceAll("__SITE_URL__/assets/hero.png", "/assets/hero.png");
+        .replaceAll("__SITE_URL__/assets/og.jpg", "/assets/og.jpg");
     },
     generateBundle() {
       const sitemapLine = siteUrl ? `\nSitemap: ${siteUrl}/sitemap.xml` : "";

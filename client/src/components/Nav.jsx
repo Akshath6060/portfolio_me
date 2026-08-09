@@ -25,13 +25,22 @@ export default function Nav() {
   useEffect(() => {
     if (!open) return;
     firstLinkRef.current?.focus();
-    const closeOnEscape = (event) => {
+    // html is the scrolling element here (it sets overflow-x), so lock it there.
+    const root = document.documentElement;
+    const scrollbarGap = window.innerWidth - root.clientWidth;
+    const previousOverflow = root.style.overflow;
+    const previousPadding = root.style.paddingRight;
+    root.style.overflow = "hidden";
+    if (scrollbarGap > 0) root.style.paddingRight = `${scrollbarGap}px`;
+
+    const handleKeydown = (event) => {
       if (event.key === "Escape") {
         setOpen(false);
         requestAnimationFrame(() => toggleRef.current?.focus());
       }
       if (event.key === "Tab") {
-        const focusable = [...menuRef.current.querySelectorAll("a, button")];
+        // The close button sits outside the panel but belongs to the same dialog.
+        const focusable = [...(menuRef.current?.querySelectorAll("a, button") || []), toggleRef.current].filter(Boolean);
         const first = focusable[0];
         const last = focusable.at(-1);
         if (event.shiftKey && document.activeElement === first) {
@@ -43,8 +52,12 @@ export default function Nav() {
         }
       }
     };
-    document.addEventListener("keydown", closeOnEscape);
-    return () => document.removeEventListener("keydown", closeOnEscape);
+    document.addEventListener("keydown", handleKeydown);
+    return () => {
+      document.removeEventListener("keydown", handleKeydown);
+      root.style.overflow = previousOverflow;
+      root.style.paddingRight = previousPadding;
+    };
   }, [open]);
 
   const closeMenu = () => setOpen(false);

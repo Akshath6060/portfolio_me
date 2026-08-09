@@ -52,7 +52,7 @@ export default function Work() {
   }, []);
 
   return (
-    <ScrollSection className="work" id="work" pattern="lift">
+    <ScrollSection className="work" id="work" pattern="lift" tabIndex={-1}>
       <Reveal className="intro" variant="up">
         <h1>Most of what I build starts with a real problem or a question I wanted to test — from an exam platform used for our college's actual MCA entrance exam to a robot that waves back at people.</h1>
         <div className="intro__aside"><p>I move across web development, machine learning, cloud infrastructure, and IoT — usually whichever combination actually solves the problem in front of me.</p><a href="#about" data-cursor="hover">More about me <span>↗</span></a></div>

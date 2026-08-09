@@ -1,7 +1,12 @@
 import { motion } from "framer-motion";
 import { useScrollDirection } from "./ScrollDirection.jsx";
+import useMediaQuery from "../../hooks/useMediaQuery.js";
 
 const EASE = [0.16, 1, 0.3, 1];
+// Narrow layouts have a gutter smaller than the horizontal reveal distance, so
+// a sideways entrance would push content past the viewport edge.
+export const NARROW_QUERY = "(max-width: 900px)";
+export const HORIZONTAL_VARIANTS = new Set(["left", "right", "alternate"]);
 
 const directionalY = (distance) => (direction) => (direction === "down" ? distance : -distance);
 const VARIANTS = {
@@ -25,6 +30,8 @@ export default function Reveal({
   ...rest
 }) {
   const direction = useScrollDirection();
+  const narrow = useMediaQuery(NARROW_QUERY);
+  const resolved = narrow && HORIZONTAL_VARIANTS.has(variant) ? "up" : variant;
   return (
     <Component
       className={className}
@@ -32,7 +39,7 @@ export default function Reveal({
       whileInView="visible"
       viewport={{ once, amount }}
       custom={direction}
-      variants={VARIANTS[variant]}
+      variants={VARIANTS[resolved]}
       transition={{ duration, delay, ease: EASE }}
       {...rest}
     >

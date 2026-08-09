@@ -21,7 +21,7 @@ export default function Hero() {
         alt="Akshath O K"
         width="1672"
         height="941"
-        fetchPriority="high"
+        fetchpriority="high"
         decoding="async"
       />
       <div className="pointer-glow__layer" aria-hidden="true" />

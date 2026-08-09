@@ -47,6 +47,7 @@ function selectTechnologyTags(repo) {
 }
 
 function prepareProjects(repositories) {
+  if (!Array.isArray(repositories)) throw new Error("Unexpected projects response");
   const excluded = new Set(projectConfig.exclude.map((name) => name.toLowerCase()));
   const included = new Set(projectConfig.include.map((name) => name.toLowerCase()));
   let eligible = repositories.filter((repo) => {

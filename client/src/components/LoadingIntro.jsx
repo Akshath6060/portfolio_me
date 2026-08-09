@@ -5,20 +5,32 @@ import { EASE } from "./motion/Reveal.jsx";
 const NAME = "AKSHATH O K";
 const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*";
 
+// Resolved once, before the first paint, so the progress line and the scramble
+// share a single timeline.
+function planIntro() {
+  let hasPlayed = false;
+  try { hasPlayed = sessionStorage.getItem("portfolio-intro-played") === "true"; } catch { /* Continue without persistence. */ }
+  const simple = window.matchMedia("(prefers-reduced-motion: reduce)").matches || hasPlayed;
+  // Touch devices run the same animation on a shorter timeline.
+  const touch = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+  return {
+    simple,
+    scrambleDuration: simple ? 0 : touch ? 850 : 1150,
+    totalDuration: simple ? 0 : touch ? 1450 : 1900,
+  };
+}
+
 export default function LoadingIntro({ onComplete }) {
   const reducedMotion = useReducedMotion();
   const [visible, setVisible] = useState(true);
   const [text, setText] = useState(NAME);
+  const [plan] = useState(planIntro);
   const frameRef = useRef(null);
 
   useEffect(() => {
     document.documentElement.classList.add("intro-active");
-    let hasPlayed = false;
-    try { hasPlayed = sessionStorage.getItem("portfolio-intro-played") === "true"; } catch { /* Continue without persistence. */ }
-    const simple = reducedMotion || hasPlayed || window.matchMedia("(hover: none), (pointer: coarse)").matches;
+    const { simple, scrambleDuration, totalDuration } = plan;
     const start = performance.now();
-    const scrambleDuration = simple ? 0 : 1150;
-    const totalDuration = simple ? 0 : 1900;
 
     if (!simple) {
       const animate = (now) => {
@@ -49,13 +61,14 @@ export default function LoadingIntro({ onComplete }) {
       window.clearTimeout(doneTimer);
       document.documentElement.classList.remove("intro-active");
     };
-  }, [onComplete, reducedMotion]);
+  }, [onComplete, plan]);
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
           className="loader"
+          style={{ "--loader-line-duration": `${plan.totalDuration}ms` }}
           initial={{ opacity: 1 }}
           exit={reducedMotion ? { opacity: 0 } : { y: "-100%" }}
           transition={{ duration: reducedMotion ? 0.25 : 0.65, ease: EASE }}

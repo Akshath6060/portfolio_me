@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000">
-  <rect width="1600" height="1000" fill="#0f0f0f"/>
-  <rect x="1" y="1" width="1598" height="998" fill="none" stroke="#2a2a2a" stroke-width="2"/>
-  <text x="80" y="110" font-family="IBM Plex Mono, monospace" font-size="26" fill="#8a8a8a" letter-spacing="3">WEB · SECURITY</text>
-  <text x="80" y="500" font-family="DM Sans, Arial, sans-serif" font-size="84" font-weight="500" fill="#ffffff"><tspan x="80" dy="0">Secure Online</tspan><tspan x="80" dy="96">Examination Platform</tspan></text>
-</svg>
