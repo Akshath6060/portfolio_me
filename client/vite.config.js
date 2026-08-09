@@ -1,12 +1,16 @@
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 
+const DEFAULT_SITE_URL = "https://akshath-ok.vercel.app";
+
 export default defineConfig(({ mode }) => {
   // Only VITE_-prefixed values are loaded, so a server-only secret in .env can
   // never be picked up here by accident.
   const env = loadEnv(mode, process.cwd(), "VITE_");
-  const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
-  const configuredUrl = env.VITE_SITE_URL || (vercelUrl ? `https://${vercelUrl}` : "");
+  // Keep one replaceable fallback for deployments where VITE_SITE_URL has not
+  // been configured. Vercel's generated project hostname may differ from the
+  // public production alias, so it is not suitable as the canonical URL.
+  const configuredUrl = env.VITE_SITE_URL || DEFAULT_SITE_URL;
   const siteUrl = configuredUrl.replace(/\/$/, "");
   return {
   plugins: [react(), {

@@ -34,7 +34,7 @@ Copy `.env.example` to `.env.local` when values are needed. Never commit the res
 
 | Variable | Required | Scope | Purpose |
 | --- | --- | --- | --- |
-| `VITE_SITE_URL` | Recommended | Public/build-time | Canonical production URL used by canonical and social metadata. Vercel's production project URL is used when this is omitted on Vercel. |
+| `VITE_SITE_URL` | Recommended | Public/build-time | Canonical production URL used by canonical and social metadata. Defaults to `https://akshath-ok.vercel.app`; set it when connecting a custom domain. |
 | `GITHUB_TOKEN` | No | Server only | Raises GitHub API limits. Public repository fetching works without it. |
 
 `GITHUB_TOKEN` must never use a `VITE_` prefix because Vite-prefixed values are included in browser code.
