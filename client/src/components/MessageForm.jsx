@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { submitContactMessage } from "../api.js";
 import Reveal from "./motion/Reveal.jsx";
+import ScrollSection from "./motion/ScrollSection.jsx";
 
 const EMPTY_FORM = { name: "", email: "", message: "" };
 
@@ -26,7 +27,7 @@ export default function MessageForm() {
   };
 
   return (
-    <section className="message" aria-labelledby="message-heading">
+    <ScrollSection className="message" aria-labelledby="message-heading" pattern="soft">
       <Reveal variant="up" amount={0.4}>
         <h3 id="message-heading">Or send a message directly</h3>
         <form onSubmit={handleSubmit}>
@@ -43,6 +44,6 @@ export default function MessageForm() {
           )}
         </form>
       </Reveal>
-    </section>
+    </ScrollSection>
   );
 }

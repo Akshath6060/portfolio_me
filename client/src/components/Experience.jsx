@@ -1,5 +1,6 @@
 import Reveal from "./motion/Reveal.jsx";
 import { StaggerContainer, StaggerItem } from "./motion/Stagger.jsx";
+import ScrollSection from "./motion/ScrollSection.jsx";
 
 const EXPERIENCE = [
   {
@@ -26,7 +27,7 @@ const EXPERIENCE = [
 
 export default function Experience() {
   return (
-    <section className="experience" id="experience">
+    <ScrollSection className="experience" id="experience" pattern="soft">
       <Reveal className="section-title" variant="up">
         <h2>Experience</h2>
         <p>TECHNOLOGY ISN'T MY ONLY EXPERIENCE — I'VE ALSO COORDINATED STUDENT COMMUNITIES AND TECHNICAL EVENTS.</p>
@@ -34,7 +35,7 @@ export default function Experience() {
 
       <StaggerContainer className="experience__list" stagger={0.1} amount={0.15}>
         {EXPERIENCE.map((item) => (
-          <StaggerItem className="experience__item" key={item.role}>
+          <StaggerItem className="experience__item" key={item.role} variant="alternate">
             <div>
               <div className="experience__role">{item.role}</div>
               <div className="experience__org">{item.org}</div>
@@ -43,6 +44,6 @@ export default function Experience() {
           </StaggerItem>
         ))}
       </StaggerContainer>
-    </section>
+    </ScrollSection>
   );
 }

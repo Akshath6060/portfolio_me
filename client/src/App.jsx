@@ -12,13 +12,15 @@ import Nav from "./components/Nav.jsx";
 import ScrollProgress from "./components/motion/ScrollProgress.jsx";
 import CustomCursor from "./components/motion/CustomCursor.jsx";
 import { EASE } from "./components/motion/Reveal.jsx";
+import { ScrollDirectionProvider } from "./components/motion/ScrollDirection.jsx";
 
 export default function App() {
   return (
     <MotionConfig reducedMotion="user" transition={{ duration: 0.6, ease: EASE }}>
-      <ScrollProgress />
-      <CustomCursor />
-      <main>
+      <ScrollDirectionProvider>
+        <ScrollProgress />
+        <CustomCursor />
+        <main>
         <Hero />
         <Work />
         <About />
@@ -29,7 +31,8 @@ export default function App() {
         <MessageForm />
         <Footer />
         <Nav />
-      </main>
+        </main>
+      </ScrollDirectionProvider>
     </MotionConfig>
   );
 }

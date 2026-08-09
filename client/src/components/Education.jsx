@@ -1,9 +1,10 @@
 import Reveal from "./motion/Reveal.jsx";
 import { StaggerContainer, StaggerItem } from "./motion/Stagger.jsx";
+import ScrollSection from "./motion/ScrollSection.jsx";
 
 export default function Education() {
   return (
-    <section className="education" id="education">
+    <ScrollSection className="education" id="education" pattern="soft">
       <Reveal className="section-title" variant="up">
         <h2>Education</h2>
         <p>MCA, ONGOING — AFTER A BSC IN COMPUTER SCIENCE.</p>
@@ -27,6 +28,6 @@ export default function Education() {
           </p>
         </StaggerItem>
       </StaggerContainer>
-    </section>
+    </ScrollSection>
   );
 }

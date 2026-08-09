@@ -6,6 +6,7 @@ export default function CustomCursor() {
   const pos = useRef({ x: 0, y: 0 });
   const ring = useRef({ x: 0, y: 0 });
   const rafRef = useRef(null);
+  const scrollTimer = useRef(null);
   const [enabled, setEnabled] = useState(false);
   const [hover, setHover] = useState(null);
 
@@ -39,6 +40,13 @@ export default function CustomCursor() {
 
     window.addEventListener("pointermove", handleMove, { passive: true });
 
+    const handleScroll = () => {
+      document.documentElement.classList.add("is-scrolling");
+      window.clearTimeout(scrollTimer.current);
+      scrollTimer.current = window.setTimeout(() => document.documentElement.classList.remove("is-scrolling"), 140);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
     if (!reduced) {
       const tick = () => {
         ring.current.x += (pos.current.x - ring.current.x) * 0.16;
@@ -51,6 +59,9 @@ export default function CustomCursor() {
 
     return () => {
       window.removeEventListener("pointermove", handleMove);
+      window.removeEventListener("scroll", handleScroll);
+      window.clearTimeout(scrollTimer.current);
+      document.documentElement.classList.remove("is-scrolling");
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       document.documentElement.classList.remove("has-custom-cursor");
     };

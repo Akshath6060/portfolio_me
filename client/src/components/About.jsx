@@ -1,5 +1,6 @@
 import Reveal from "./motion/Reveal.jsx";
 import { StaggerContainer, StaggerItem } from "./motion/Stagger.jsx";
+import ScrollSection from "./motion/ScrollSection.jsx";
 
 const FACTS = [
   { label: "Currently", value: "MCA, St. Joseph's College (Autonomous), Devagiri" },
@@ -10,14 +11,14 @@ const FACTS = [
 
 export default function About() {
   return (
-    <section className="about" id="about">
+    <ScrollSection className="about" id="about" pattern="split">
       <Reveal className="section-title" variant="up">
         <h2>About</h2>
         <p>MCA STUDENT AT ST. JOSEPH'S COLLEGE (AUTONOMOUS), DEVAGIRI — BUILDING ACROSS SOFTWARE, AI, CLOUD, AND HARDWARE.</p>
       </Reveal>
 
       <div className="about__text">
-        <Reveal variant="up" delay={0.05}>
+        <Reveal variant="left" delay={0.05}>
           <p>
             I'm Akshath O K, currently pursuing my Master of Computer Applications at St. Joseph's College (Autonomous),
             Devagiri, Kozhikode, after finishing a BSc in Computer Science. I like understanding how a system actually works,
@@ -31,13 +32,13 @@ export default function About() {
         </Reveal>
         <StaggerContainer className="about__facts" stagger={0.08}>
           {FACTS.map((fact) => (
-            <StaggerItem key={fact.label}>
+            <StaggerItem key={fact.label} variant="right">
               <strong>{fact.label}</strong>
               {fact.value}
             </StaggerItem>
           ))}
         </StaggerContainer>
       </div>
-    </section>
+    </ScrollSection>
   );
 }

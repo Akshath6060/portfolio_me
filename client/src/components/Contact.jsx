@@ -2,13 +2,14 @@ import { useRef } from "react";
 import Reveal from "./motion/Reveal.jsx";
 import MagneticButton from "./motion/MagneticButton.jsx";
 import usePointerGlow from "../hooks/usePointerGlow.js";
+import ScrollSection from "./motion/ScrollSection.jsx";
 
 export default function Contact() {
   const sectionRef = useRef(null);
   usePointerGlow(sectionRef);
 
   return (
-    <section className="contact pointer-glow" id="contact" ref={sectionRef}>
+    <ScrollSection className="contact pointer-glow" id="contact" sectionRef={sectionRef} pattern="lift">
       <div className="pointer-glow__layer" aria-hidden="true" />
       <Reveal className="contact__heading" variant="up">
         <small>That's all for now.</small>
@@ -29,6 +30,6 @@ export default function Contact() {
           </a>
         </div>
       </Reveal>
-    </section>
+    </ScrollSection>
   );
 }

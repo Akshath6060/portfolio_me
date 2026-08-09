@@ -3,6 +3,7 @@ import { fetchProjects } from "../api.js";
 import Reveal from "./motion/Reveal.jsx";
 import { StaggerContainer, ITEM_VARIANTS } from "./motion/Stagger.jsx";
 import TiltCard from "./motion/TiltCard.jsx";
+import ScrollSection from "./motion/ScrollSection.jsx";
 
 const FALLBACK_PROJECTS = [
   {
@@ -93,7 +94,7 @@ export default function Work() {
   }, []);
 
   return (
-    <section className="work" id="work">
+    <ScrollSection className="work" id="work" pattern="lift">
       <Reveal className="intro" variant="up">
         <h1>
           Most of what I build starts with a real problem or a question I wanted to test — from an exam platform used for our
@@ -138,6 +139,6 @@ export default function Work() {
           </TiltCard>
         ))}
       </StaggerContainer>
-    </section>
+    </ScrollSection>
   );
 }

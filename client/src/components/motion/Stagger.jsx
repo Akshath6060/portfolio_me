@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { EASE } from "./Reveal.jsx";
+import { useScrollDirection } from "./ScrollDirection.jsx";
 
 export function StaggerContainer({
   children,
@@ -7,16 +8,18 @@ export function StaggerContainer({
   className,
   stagger = 0.08,
   delay = 0,
-  once = true,
+  once = false,
   amount = 0.2,
   ...rest
 }) {
+  const direction = useScrollDirection();
   return (
     <Component
       className={className}
       initial="hidden"
       whileInView="visible"
       viewport={{ once, amount }}
+      custom={direction}
       variants={{ hidden: {}, visible: { transition: { staggerChildren: stagger, delayChildren: delay } } }}
       {...rest}
     >
@@ -27,12 +30,20 @@ export function StaggerContainer({
 
 const ITEM_VARIANTS = {
   up: {
-    hidden: { opacity: 0, y: 20 },
+    hidden: (direction) => ({ opacity: 0, y: direction === "down" ? 20 : -20 }),
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE } },
   },
   scale: {
-    hidden: { opacity: 0, scale: 0.97 },
+    hidden: (direction) => ({ opacity: 0, scale: direction === "down" ? 0.96 : 1.025, y: direction === "down" ? 8 : -8 }),
     visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: EASE } },
+  },
+  alternate: {
+    hidden: (direction) => ({ opacity: 0, x: direction === "down" ? -22 : 22, y: direction === "down" ? 8 : -8 }),
+    visible: { opacity: 1, x: 0, y: 0, transition: { duration: 0.5, ease: EASE } },
+  },
+  right: {
+    hidden: { opacity: 0, x: 26 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: EASE } },
   },
 };
 

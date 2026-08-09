@@ -1,5 +1,6 @@
 import Reveal from "./motion/Reveal.jsx";
 import { StaggerContainer, StaggerItem } from "./motion/Stagger.jsx";
+import ScrollSection from "./motion/ScrollSection.jsx";
 
 const SKILLS = [
   { category: "Programming", items: ["Python", "Java", "C", "JavaScript", "SQL"] },
@@ -14,7 +15,7 @@ const SKILLS = [
 
 export default function Skills() {
   return (
-    <section className="skills" id="skills">
+    <ScrollSection className="skills" id="skills" pattern="scale">
       <Reveal className="section-title" variant="up">
         <h2>Skills</h2>
         <p>TECHNOLOGIES I REACH FOR ACROSS SOFTWARE, AI/ML, CLOUD, AND HARDWARE PROJECTS.</p>
@@ -32,6 +33,6 @@ export default function Skills() {
           </StaggerItem>
         ))}
       </StaggerContainer>
-    </section>
+    </ScrollSection>
   );
 }
