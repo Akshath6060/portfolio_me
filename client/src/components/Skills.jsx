@@ -1,0 +1,34 @@
+const SKILLS = [
+  { category: "Programming", items: ["Python", "Java", "C", "JavaScript", "SQL"] },
+  { category: "Web & Backend", items: ["Django", "FastAPI", "Node.js", "Express", "REST APIs"] },
+  { category: "Frontend / Mobile", items: ["React", "Flutter", "HTML", "CSS", "JavaScript"] },
+  { category: "AI / Machine Learning", items: ["Scikit-learn", "TensorFlow / Keras", "XGBoost", "Pandas", "NumPy", "OpenCV"] },
+  { category: "Databases", items: ["MySQL", "MongoDB", "Supabase"] },
+  { category: "Cloud & Infrastructure", items: ["AWS EC2", "S3", "RDS", "VPC", "IAM"] },
+  { category: "Hardware / IoT", items: ["Arduino", "ESP8266 / NodeMCU", "Sensors", "Servo motors", "Serial communication"] },
+  { category: "Tools", items: ["Git", "GitHub", "VS Code", "MySQL Workbench", "Docker"] },
+];
+
+export default function Skills() {
+  return (
+    <section className="skills" id="skills">
+      <div className="section-title">
+        <h2>Skills</h2>
+        <p>TECHNOLOGIES I REACH FOR ACROSS SOFTWARE, AI/ML, CLOUD, AND HARDWARE PROJECTS.</p>
+      </div>
+
+      <div className="skills__grid">
+        {SKILLS.map((group) => (
+          <div className="skills__category" key={group.category}>
+            <h3>{group.category}</h3>
+            <div className="skills__tags">
+              {group.items.map((item) => (
+                <span key={item}>{item}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
