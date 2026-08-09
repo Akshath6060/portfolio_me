@@ -4,6 +4,15 @@ import ScrollSection from "./motion/ScrollSection.jsx";
 
 const EXPERIENCE = [
   {
+    role: "Co-Founder",
+    org: "Technoate Solutions LLP",
+    meta: "2026 — Present",
+    active: true,
+    desc: "Co-founded an early-stage technology startup focused on software solutions and AI-driven products. Working across product ideation, technical development, R&D, prototyping, technical decisions, and early-stage startup operations.",
+    areas: "AI · Software · Web Applications · Automation · Product Development",
+    initiative: "Current product R&D explores an AI-assisted education → skills → career → employment platform, including skill-gap, job-readiness, resume, and learning guidance concepts.",
+  },
+  {
     role: "Campus Lead → Operations & Quality Assurance Lead",
     org: "IEDC Devagiri",
     desc: "Coordinated technical initiatives, workshops, and startup/innovation activities at the campus incubation cell. Moved from leading the campus chapter to focusing on event execution and quality, working closely with faculty and student teams.",
@@ -30,7 +39,7 @@ export default function Experience() {
     <ScrollSection className="experience" id="experience" pattern="soft">
       <Reveal className="section-title" variant="up">
         <h2>Experience</h2>
-        <p>TECHNOLOGY ISN'T MY ONLY EXPERIENCE — I'VE ALSO COORDINATED STUDENT COMMUNITIES AND TECHNICAL EVENTS.</p>
+        <p>BUILDING PRODUCTS, TECHNICAL INITIATIVES, STUDENT COMMUNITIES, AND HANDS-ON LEARNING EXPERIENCES.</p>
       </Reveal>
 
       <StaggerContainer className="experience__list" stagger={0.1} amount={0.15}>
@@ -39,8 +48,13 @@ export default function Experience() {
             <div>
               <div className="experience__role">{item.role}</div>
               <div className="experience__org">{item.org}</div>
+              {item.meta && <div className="experience__meta">{item.meta} {item.active && <span className="experience__status"><i /> Active</span>}</div>}
             </div>
-            <p className="experience__desc">{item.desc}</p>
+            <div>
+              <p className="experience__desc">{item.desc}</p>
+              {item.areas && <p className="experience__areas">{item.areas}</p>}
+              {item.initiative && <p className="experience__initiative"><strong>Product / R&amp;D initiative</strong>{item.initiative}</p>}
+            </div>
           </StaggerItem>
         ))}
       </StaggerContainer>

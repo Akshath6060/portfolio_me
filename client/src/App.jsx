@@ -1,4 +1,5 @@
-import { MotionConfig } from "framer-motion";
+import { useCallback, useState } from "react";
+import { motion, MotionConfig } from "framer-motion";
 import Hero from "./components/Hero.jsx";
 import Work from "./components/Work.jsx";
 import About from "./components/About.jsx";
@@ -13,14 +14,26 @@ import ScrollProgress from "./components/motion/ScrollProgress.jsx";
 import CustomCursor from "./components/motion/CustomCursor.jsx";
 import { EASE } from "./components/motion/Reveal.jsx";
 import { ScrollDirectionProvider } from "./components/motion/ScrollDirection.jsx";
+import LoadingIntro from "./components/LoadingIntro.jsx";
+import { ThemeProvider } from "./components/ThemeProvider.jsx";
 
 export default function App() {
+  const [introComplete, setIntroComplete] = useState(false);
+  const completeIntro = useCallback(() => setIntroComplete(true), []);
+
   return (
-    <MotionConfig reducedMotion="user" transition={{ duration: 0.6, ease: EASE }}>
-      <ScrollDirectionProvider>
-        <ScrollProgress />
-        <CustomCursor />
-        <main>
+    <ThemeProvider>
+      <MotionConfig reducedMotion="user" transition={{ duration: 0.6, ease: EASE }}>
+        <ScrollDirectionProvider>
+          <LoadingIntro onComplete={completeIntro} />
+          {introComplete && <ScrollProgress />}
+          {introComplete && <CustomCursor />}
+          <motion.main
+            initial={{ opacity: 0.72, scale: 1.008 }}
+            animate={introComplete ? { opacity: 1, scale: 1 } : { opacity: 0.72, scale: 1.008 }}
+            transition={{ duration: introComplete ? 0.7 : 0, ease: EASE }}
+            aria-hidden={!introComplete}
+          >
         <Hero />
         <Work />
         <About />
@@ -30,9 +43,10 @@ export default function App() {
         <Contact />
         <MessageForm />
         <Footer />
-        <Nav />
-        </main>
-      </ScrollDirectionProvider>
-    </MotionConfig>
+          {introComplete && <Nav />}
+          </motion.main>
+        </ScrollDirectionProvider>
+      </MotionConfig>
+    </ThemeProvider>
   );
 }

@@ -1,8 +1,10 @@
 import useActiveSection from "../hooks/useActiveSection.js";
 import { motion } from "framer-motion";
+import { useTheme } from "./ThemeProvider.jsx";
 
 export default function Nav() {
   const activeId = useActiveSection();
+  const { theme, toggleTheme } = useTheme();
 
   const isActive = (hash) => hash === `#${activeId}`;
   const indicator = (hash) =>
@@ -36,6 +38,9 @@ export default function Nav() {
       <a className={isActive("#contact") ? "active" : undefined} href="#contact" aria-label="Contact" data-cursor="hover">
         {indicator("#contact")}<span className="nav__icon">↗</span>
       </a>
+      <button className="nav__theme" type="button" onClick={toggleTheme} aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`} data-cursor="hover">
+        <span aria-hidden="true">{theme === "dark" ? "☾" : "☀"}</span>
+      </button>
     </nav>
   );
 }

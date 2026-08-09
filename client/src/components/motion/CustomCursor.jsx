@@ -15,6 +15,7 @@ export default function CustomCursor() {
     if (!canHover) return;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
     setEnabled(true);
     document.documentElement.classList.add("has-custom-cursor");
 
@@ -33,7 +34,6 @@ export default function CustomCursor() {
       pos.current.x = e.clientX;
       pos.current.y = e.clientY;
       moveDot(e.clientX, e.clientY);
-      if (reduced) moveRing(e.clientX, e.clientY);
       const target = e.target.closest?.("[data-cursor]");
       setHover(target ? target.getAttribute("data-cursor") : null);
     };
@@ -47,15 +47,13 @@ export default function CustomCursor() {
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
 
-    if (!reduced) {
-      const tick = () => {
-        ring.current.x += (pos.current.x - ring.current.x) * 0.16;
-        ring.current.y += (pos.current.y - ring.current.y) * 0.16;
-        moveRing(ring.current.x, ring.current.y);
-        rafRef.current = requestAnimationFrame(tick);
-      };
+    const tick = () => {
+      ring.current.x += (pos.current.x - ring.current.x) * 0.16;
+      ring.current.y += (pos.current.y - ring.current.y) * 0.16;
+      moveRing(ring.current.x, ring.current.y);
       rafRef.current = requestAnimationFrame(tick);
-    }
+    };
+    rafRef.current = requestAnimationFrame(tick);
 
     return () => {
       window.removeEventListener("pointermove", handleMove);

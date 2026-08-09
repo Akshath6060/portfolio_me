@@ -29,6 +29,10 @@ export default function Contact() {
             okakshath123@gmail.com
           </a>
         </div>
+        <div>
+          <small>Connect:</small>
+          <span className="contact__socials"><a href="https://github.com/Akshath6060" target="_blank" rel="noopener noreferrer" aria-label="Akshath O K on GitHub" data-cursor="hover">GitHub</a><a href="https://www.linkedin.com/in/akshath-ok" target="_blank" rel="noopener noreferrer" aria-label="Akshath O K on LinkedIn" data-cursor="hover">LinkedIn</a></span>
+        </div>
       </Reveal>
     </ScrollSection>
   );

@@ -29,6 +29,10 @@ export default function Hero() {
           <span>@ Akshath O K</span>
           <span>MCA student exploring software engineering, artificial intelligence, cloud computing, IoT, and product development.</span>
         </div>
+        <div className="hero__socials" aria-label="Social profiles">
+          <a href="https://github.com/Akshath6060" target="_blank" rel="noopener noreferrer" aria-label="Akshath O K on GitHub" data-cursor="hover">GitHub</a>
+          <a href="https://www.linkedin.com/in/akshath-ok" target="_blank" rel="noopener noreferrer" aria-label="Akshath O K on LinkedIn" data-cursor="hover">LinkedIn</a>
+        </div>
         <div className="marquee">
           <span>Building Ideas Into Systems</span>
         </div>
