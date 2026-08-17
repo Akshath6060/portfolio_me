@@ -29,20 +29,19 @@ export default function Hero() {
         className="hero__content"
         style={{ y: prefersReduced ? 0 : contentY, opacity: prefersReduced ? 1 : contentOpacity }}
       >
-        <div className="topline">
-          <span>@ Akshath O K</span>
-          <span>MCA student exploring software engineering, artificial intelligence, cloud computing, IoT, and product development.</span>
+        <div className="hero__copy">
+          <p className="hero__eyebrow">Hey <span aria-hidden="true">👋</span>, I’m Akshath</p>
+          <h1>Software engineer &amp;<br />AI enthusiast</h1>
+          <p className="hero__lede">I build thoughtful digital products across web, artificial intelligence, cloud, and connected hardware.</p>
+          <div className="hero__actions">
+            <a className="button button--primary" href="mailto:okakshath123@gmail.com" data-cursor="hover">Contact</a>
+            <a className="button button--ghost" href="#work" data-cursor="hover">View my work <span aria-hidden="true">→</span></a>
+          </div>
         </div>
-        <div className="hero__socials" aria-label="Social profiles">
-          <a href="https://github.com/Akshath6060" target="_blank" rel="noopener noreferrer" aria-label="Akshath O K on GitHub" data-cursor="hover">GitHub</a>
-          <a href="https://www.linkedin.com/in/akshath-ok" target="_blank" rel="noopener noreferrer" aria-label="Akshath O K on LinkedIn" data-cursor="hover">LinkedIn</a>
+        <div className="hero__portrait">
+          <img src="/assets/hero.webp" alt="Akshath O K" width="1672" height="941" decoding="async" />
+          <span aria-hidden="true">&lt;/&gt;</span>
         </div>
-        <div className="marquee">
-          <span>Building Ideas Into Systems</span>
-        </div>
-        <span className="hero__arrow" data-cursor="hover" aria-hidden="true">
-          ↗
-        </span>
       </motion.div>
     </section>
   );

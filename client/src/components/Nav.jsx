@@ -72,7 +72,7 @@ export default function Nav() {
         {LINKS.map((link) => (
           <a className={isActive(link.hash) ? "active" : undefined} href={link.hash} aria-label={link.label} data-cursor="hover" key={link.hash}>
             {isActive(link.hash) && <motion.span className="nav__indicator" layoutId="nav-active" transition={{ type: "spring", stiffness: 360, damping: 30 }} />}
-            <span className="nav__icon">{link.icon}</span>
+            <span className="nav__icon">{link.label}</span>
           </a>
         ))}
         <button className="nav__theme" type="button" onClick={toggleTheme} aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`} data-cursor="hover"><span aria-hidden="true">{theme === "dark" ? "☾" : "☀"}</span></button>
